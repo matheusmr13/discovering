@@ -1,6 +1,6 @@
 discover/.classpath
 discover/.project
-discover/.settings/org.eclipse.jdt.core.prefs
+discover/.settings
 discover/node/**
 discover/node_modules/**
 discover/target-grunt/**
