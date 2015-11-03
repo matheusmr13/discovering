@@ -1,0 +1,11 @@
+discover/.classpath
+discover/.project
+discover/.settings/org.eclipse.jdt.core.prefs
+discover/node/**
+discover/node_modules/**
+discover/target-grunt/**
+discover/target
+.metadata/*
+.metadata/
+RemoteSystemsTempFiles/*
+RemoteSystemsTempFiles/
