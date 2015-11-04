@@ -1,4 +1,36 @@
  $(document).ready(function() {
+     $.fn.getPath = function () {
+        var path, node = this;
+        while (node.length) {
+            var realNode = node[0], name = realNode.localName;
+            if (!name) break;
+            name = name.toLowerCase();
+
+            var parent = node.parent();
+
+            var sameTagSiblings = parent.children(name);
+            if (sameTagSiblings.length > 1) { 
+                allSiblings = parent.children();
+                var index = allSiblings.index(realNode) + 1;
+                if (index > 1) {
+                    name += ':nth-child(' + index + ')';
+                }
+            }
+
+            path = name + (path ? '>' + path : '');
+            node = parent;
+        }
+
+        return path;
+    };
+     var actionType = {
+         MOUSE_MOVE : 'MM',
+         MOUSE_DRAG : 'MD',
+         MOUSE_CLICK : 'MC',
+         COPY : 'CP',
+         INPUT_FOCUS : 'IF',
+         INPUT_KEY : 'IK'
+     };
 //    var heatmap = [];
 //    var w = parseInt(window.innerWidth/10);
 //    var h = parseInt(window.innerHeight/10);
@@ -34,7 +66,13 @@
 //        heatmap[actualX][actualY]++;
 //        redraw();
 //    }, 100);
-    var getInfosBrowser = function() {
+     var ip;
+     window.someRandomFuncion = function(json) {
+         ip = json.ip;
+     };
+     $('body').append('<script type="application/javascript" src="http://www.telize.com/jsonip?callback=someRandomFuncion"></script>');
+     
+    var getUserInfo = function() {
         var nVer = navigator.appVersion;
         var nAgt = navigator.userAgent;
         var browserName  = navigator.appName;
@@ -42,36 +80,30 @@
         var majorVersion = parseInt(navigator.appVersion,10);
         var nameOffset,verOffset,ix;
 
-        // In Opera, the true version is after "Opera" or after "Version"
         if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
            browserName = "Opera";
            fullVersion = nAgt.substring(verOffset+6);
            if ((verOffset=nAgt.indexOf("Version"))!=-1) 
              fullVersion = nAgt.substring(verOffset+8);
         }
-        // In MSIE, the true version is after "MSIE" in userAgent
         else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
            browserName = "Microsoft Internet Explorer";
            fullVersion = nAgt.substring(verOffset+5);
         }
-        // In Chrome, the true version is after "Chrome" 
         else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
            browserName = "Chrome";
            fullVersion = nAgt.substring(verOffset+7);
         }
-        // In Safari, the true version is after "Safari" or after "Version" 
         else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
            browserName = "Safari";
            fullVersion = nAgt.substring(verOffset+7);
            if ((verOffset=nAgt.indexOf("Version"))!=-1) 
              fullVersion = nAgt.substring(verOffset+8);
         }
-        // In Firefox, the true version is after "Firefox" 
         else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
             browserName = "Firefox";
             fullVersion = nAgt.substring(verOffset+8);
         }
-        // In most other browsers, "name/version" is at the end of userAgent 
         else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < (verOffset=nAgt.lastIndexOf('/')) ) {
             browserName = nAgt.substring(nameOffset,verOffset);
             fullVersion = nAgt.substring(verOffset+1);
@@ -79,11 +111,12 @@
                browserName = navigator.appName;
             }
         }
-        // trim the fullVersion string at semicolon/space if present
-        if ((ix=fullVersion.indexOf(";"))!=-1)
+        if ((ix=fullVersion.indexOf(";"))!=-1) {
             fullVersion=fullVersion.substring(0,ix);
-        if ((ix=fullVersion.indexOf(" "))!=-1)
+        }
+        if ((ix=fullVersion.indexOf(" "))!=-1) {
             fullVersion=fullVersion.substring(0,ix);
+        }
 
         majorVersion = parseInt(''+fullVersion,10);
         if (isNaN(majorVersion)) {
@@ -91,53 +124,88 @@
             majorVersion = parseInt(navigator.appVersion,10);
         }
 
-        return {browser: browserName, version : fullVersion, majorVersion: majorVersion, navigatorAppName:navigator.appName, navigatorUserAgent : navigator.userAgent};
+        return {
+            browser : browserName,
+            version : fullVersion,
+            majorVersion : majorVersion,
+            navigatorAppName : navigator.appName,
+            navigatorUserAgent : navigator.userAgent,
+            operatingSystem : navigator.platform,
+            language : navigator.language,
+            ip : ip,
+            screenWidth: window.screen.availWidth,
+            screenHeight: window.screen.availHeight,
+            browserWidth: window.screen.availWidth,
+            browserHeight: window.screen.availHeight,
+            startDate : yawpUtils.dateToYawpDate(new Date())
+        };
     };
 
-    var infos = getInfosBrowser();
-     infos.startDate = yawpUtils.dateToYawpDate(new Date());
-    var basicEventPos = function (e, t) {
-        return {x:e.pageX,
-                y:e.pageY,
-                timeSince: e.timeStamp,
-                actionType:t}
-    }
-    var initialTimestamp = new Date().getTime();
-    var criarDiv = function(cor) {
-        return '<div style="width:10px;height:10px;background-color:'+cor+';position:absolute;"></div>';
+    var mouseAction = function (e, t) {
+        return {
+            x : e.pageX,
+            y : e.pageY,
+            s : e.timeStamp,
+            t : t
+        };
+    };
+     
+     var copyAction = function (copiedText) {
+        return {
+            c : copiedText,
+            s : new Date().getTime(),
+            t : actionType.COPY
+        };
+    };
+     
+     var inputFocusAction = function (e) {
+        return {
+            q : $(e.target).getPath(),
+            s : e.timeStamp,
+            t : actionType.INPUT_FOCUS
+        };
+    };
+     
+     var inputKeyAction = function (e) {
+        return {
+            k : e.keyCode,
+            s : e.timeStamp,
+            t : actionType.INPUT_KEY
+        };
     };
 
-    var divClick = criarDiv('red');
-    var divDrag = criarDiv('green');
-    var divMove = criarDiv('blue');
-    var pos = [];
+    var actions = [];
     var holding = false;
+
     $('body').mousemove(function(e) {
 //        actualX = parseInt(e.pageX/10);
 //        actualY = parseInt(e.pageY/10);
-        if (holding) {
-            pos.push(basicEventPos(e,'MOUSE_DRAG'));
-        } else {
-            pos.push(basicEventPos(e,'MOUSE_MOVE'));
-        }
+        actions.push(mouseAction(e, holding ? actionType.MOUSE_DRAG : actionType.MOUSE_MOVE));
     });
+    
     $('body').mousedown(function(e) {
         holding = true;
-        pos.push(basicEventPos(e,'MOUSE_CLICK'));
+        actions.push(mouseAction(e, actionType.MOUSE_CLICK));
     });
+
     $('body').mouseup(function(e) {
         holding = false;
     });
+     
+     $('input').on('focus',function(e) {
+         actions.push(inputFocusAction(e));
+     });
     $('input').keydown(function(e) {
-        pos.push({
-            t:'i',
-            i:$(this),
-            c:String.fromCharCode(e.keyCode)
-        });
+        actions.push(inputKeyAction(e));
     });
-
+     
+     var registerCopy = function () {
+         actions.push(copyAction(window.getSelection().toString()));
+     };
+     document.addEventListener('copy', registerCopy);
     $('button').click(function() {
-        infos.actions = pos;
-        yawp('/recordings').create(infos);
+        var recording = getUserInfo();
+        recording.actions = actions;
+        yawp('/recordings').create(recording);
     });
 });

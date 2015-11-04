@@ -2,12 +2,11 @@
     <head>
     </head>
     <body>
-        <div style="width:100%;height;100px;position:fixed;top:0;left:0;" id="header"></div>
         <h1>Meu titulo legal</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ullamcorper congue aliquet. Aliquam erat volutpat. Sed congue rhoncus nisl, quis convallis dolor facilisis ac. Vivamus tempor enim vitae eros aliquet sollicitudin. Fusce mollis odio augue, id mattis enim pellentesque sit amet. Donec quis pharetra diam. Nunc a enim fermentum, luctus metus nec, tempor metus. Aliquam erat volutpat. Maecenas varius convallis odio eu egestas. Phasellus non massa pretium, dictum justo vel, ullamcorper purus. Sed rutrum augue eget dolor rhoncus, at euismod neque ultricies. Curabitur viverra bibendum sapien eget convallis. Curabitur aliquam tellus mauris, et dignissim urna porta vitae. Vivamus neque lacus, rutrum vel malesuada sit amet, scelerisque ut lacus. Maecenas rhoncus est pulvinar odio viverra, at volutpat neque varius.<p>
         </p>Suspendisse potenti. Sed fermentum, purus id fermentum ullamcorper, dui diam gravida mauris, id iaculis elit sem id lacus. Pellentesque at vehicula diam. Nulla et nunc et lorem pretium lobortis a id odio. In sit amet purus nec nisi ullamcorper molestie. Cras in dolor et erat laoreet dapibus. Donec vitae magna vitae sem consequat accumsan in a odio. Proin vel nibh facilisis, iaculis magna posuere, eleifend lectus. Sed vitae risus nisl. Fusce eget purus placerat, eleifend augue et, tristique justo. Vestibulum ultricies finibus tellus, ac auctor sapien dictum at.<p>
         <input type="text" name="meuinput"/>
-        </p>Curabitur nec ligula ex. Cras dolor dolor, rhoncus sit amet nisl eget, condimentum tristique diam. Mauris non mi rutrum, mollis nibh non, tincidunt libero. Proin nec justo libero. Praesent interdum, dolor eu varius viverra, diam nulla commodo sem, vel viverra lorem mauris commodo velit. Proin sit amet lorem magna. Ut lectus purus, pharetra at venenatis et, lobortis tristique enim. Morbi luctus feugiat interdum. Praesent rhoncus, quam congue bibendum rutrum, lacus eros elementum quam, et aliquam sapien nisl at sem.<p>
+        <input type="text" name="meuoutroinput"/>
         </p>Pellentesque sed nulla ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent aliquet lacinia leo accumsan fringilla. Duis ultrices venenatis venenatis. Mauris non neque quis est vestibulum suscipit. In feugiat venenatis augue ut consequat. Etiam mattis at ex a vulputate. Donec rutrum turpis malesuada, tincidunt nisi ut, consectetur turpis. Phasellus lacinia a elit non dapibus. Fusce semper quam vitae purus feugiat, nec pellentesque tellus consequat. Fusce ac quam a nulla placerat tincidunt eget ut elit. Cras nec urna scelerisque, dictum nisi vestibulum, blandit ante. Suspendisse dictum, velit et luctus mattis, justo enim dignissim risus, ut consequat nibh lectus vel libero. Morbi blandit odio nec ligula semper, nec suscipit nunc blandit. Nullam vitae nibh purus.<p>
         </p>Pellentesque placerat a odio et varius. Integer maximus ante ac est luctus rutrum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque et turpis eget sem rutrum molestie consectetur quis nisl. Suspendisse sed ultricies mi. Sed ac neque erat. Nullam sit amet libero enim. Quisque ut feugiat eros, quis gravida ex. Etiam et congue arcu. Mauris maximus enim ligula, eget gravida odio luctus nec. Suspendisse ornare blandit ligula nec convallis.</p>
         <button>Meu botao legal</button>
@@ -34,30 +33,33 @@
                     $('#header').text(recording.browser + ' / ' + recording.majorVersion + ' / '+ recording.version);
                     $('body').append(divMove);
                     var div = $('#move');
-                    console.info(recording.startDate);
 
-                    console.info(yawpUtils.yawpDateToDate(yawpUtils.formatarData(recording.startDate)).getTime());
-                    console.info(pos[0].timeSince);
+                    $('input').on('keydown',function(e) {
+                        $(this).val($(this).val() + String.fromCharCode(e.keyCode));
+                    });
+                    
                     var executePos = function(i, oldTimestamp) {
-                        console.info(pos[i]);
-                        console.info((pos[i].timeSince - oldTimestamp)/1000);
                         setTimeout(function() {
-                            if (pos[i].actionType==='MOUSE_MOVE') {
+                            if (pos[i].t==='MM') {
                                 div.css('top',pos[i].y);
                                 div.css('left',pos[i].x);
-                            } else if (pos[i].actionType ==='MOUSE_CLICK'){
+                            } else if (pos[i].t ==='MC'){
                                 div.css('top',pos[i].y);
                                 div.css('left',pos[i].x);
                                 $('body').append($(divClick).css('top',pos[i].y).css('left',pos[i].x));
-                            } else if (pos[i].actionType ==='MOUSE_DRAG'){
+                            } else if (pos[i].t ==='MD'){
                                 div.css('top',pos[i].y);
                                 div.css('left',pos[i].x);
                                 $('body').append($(divDrag).css('top',pos[i].y).css('left',pos[i].x));
-                            } else if (pos[i].actionType ==='i') {
-                                pos[i].i.val(pos[i].i.val()+pos[i].c);
+                            } else if (pos[i].t ==='IF') {
+                                $(pos[i].q).eq(0).focus();
+                            } else if (pos[i].t === 'IK') {
+                                $('input:focus').trigger(jQuery.Event( 'keydown', { keyCode: pos[i].k, which: pos[i].k } ));
+                            } else if (pos[i].t === 'CP') {
+                                console.info("COPIOU: "+ pos[i].c);
                             }
-                            executePos(i+1,pos[i].timeSince);
-                        }, pos[i].timeSince - oldTimestamp);
+                            executePos(i+1,pos[i].s);
+                        }, pos[i].s - oldTimestamp);
                     };
                     executePos(0,  yawpUtils.yawpDateToDate(yawpUtils.formatarData(recording.startDate)).getTime());
                 });

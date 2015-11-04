@@ -13,13 +13,20 @@ public class Recording {
 
 	@Id
 	private IdRef<Recording> id;
-
 	private Date startDate;
 	private String browser;
 	private String version;
 	private String majorVersion;
 	private String navigatorAppName;
 	private String navigatorUserAgent;
+	private String operatingSystem;
+	private String language;
+	private String ip;
+
+	private Integer screenWidth;
+	private Integer screenHeight;
+	private Integer browserWidth;
+	private Integer browserHeight;
 
 	@Json
 	private List<Action> actions;
@@ -86,6 +93,62 @@ public class Recording {
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getOperatingSystem() {
+		return operatingSystem;
+	}
+
+	public void setOperatingSystem(String operatingSystem) {
+		this.operatingSystem = operatingSystem;
+	}
+
+	public Integer getScreenWidth() {
+		return screenWidth;
+	}
+
+	public void setScreenWidth(Integer screenWidth) {
+		this.screenWidth = screenWidth;
+	}
+
+	public Integer getScreenHeight() {
+		return screenHeight;
+	}
+
+	public void setScreenHeight(Integer screenHeight) {
+		this.screenHeight = screenHeight;
+	}
+
+	public Integer getBrowserWidth() {
+		return browserWidth;
+	}
+
+	public void setBrowserWidth(Integer browserWidth) {
+		this.browserWidth = browserWidth;
+	}
+
+	public Integer getBrowserHeight() {
+		return browserHeight;
+	}
+
+	public void setBrowserHeight(Integer browserHeight) {
+		this.browserHeight = browserHeight;
 	}
 
 }

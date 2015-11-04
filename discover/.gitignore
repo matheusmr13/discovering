@@ -1,0 +1,16 @@
+/bin
+src/main/webapp/WEB-INF/classes
+src/main/webapp/WEB-INF/lib
+src/main/webapp/WEB-INF/appengine-generated/*
+/target/*
+/target/
+.settings/*
+.settings/
+.metadata/*
+.metadata/
+test-output/
+test-output/*
+/target-grunt/
+/node_modules/
+/gen/
+*.DS_Store
