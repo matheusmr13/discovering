@@ -3,12 +3,13 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>discover</groupId>
-	<artifactId>discover</artifactId>
+	<groupId>discovering</groupId>
+	<artifactId>discovering</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 
 	<properties>
+		<app.id>discovering-1120</app.id>
 		<yawp.version>1.3.4</yawp.version>
 		<appengine.app.version>1</appengine.app.version>
 		<appengine.sdk.version>1.9.25</appengine.sdk.version>
@@ -27,6 +28,12 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -62,7 +69,7 @@
 						<configuration>
 							<workingDirectory>${basedir}/src/main/webapp/WEB-INF</workingDirectory>
 							<executable>ln</executable>
-							<commandlineArgs>-sf ../../../../target/discover-1/WEB-INF/classes</commandlineArgs>
+							<commandlineArgs>-sf ../../../../target/discovering-1/WEB-INF/classes</commandlineArgs>
 						</configuration>
 					</execution>
 					<execution>

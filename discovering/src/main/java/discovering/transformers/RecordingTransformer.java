@@ -1,9 +1,10 @@
-package discover.transformers;
+package discovering.transformers;
+
+import io.yawp.repository.transformers.Transformer;
 
 import java.util.Map;
 
-import discover.models.Recording;
-import io.yawp.repository.transformers.Transformer;
+import discovering.models.Recording;
 
 public class RecordingTransformer extends Transformer<Recording> {
 

@@ -1,4 +1,4 @@
-package discover.models;
+package discovering.models;
 
 public enum ActionType {
 	MD("Mouse Drag"), MM("Mouse Move"), MC("Mouse Click"), CP("Copy"), IF("Input Focus"), IK("Input Key");

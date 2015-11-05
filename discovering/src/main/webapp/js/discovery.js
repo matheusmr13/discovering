@@ -31,41 +31,6 @@
          INPUT_FOCUS : 'IF',
          INPUT_KEY : 'IK'
      };
-//    var heatmap = [];
-//    var w = parseInt(window.innerWidth/10);
-//    var h = parseInt(window.innerHeight/10);
-//    var actualX, actualY;
-//    for (var i=0;i<w;i++) {
-//        var a = [];
-//        for (var j=0;j<h;j++) {
-//            a.push(0);
-//        }
-//        heatmap.push(a);
-//    }
-//
-//    var ctx = document.getElementById('canvas').getContext('2d');
-//    var redraw = function() {
-//        ctx.clearRect(0, 0, 1500, 1500);
-//        for (var i=0;i<w;i++) {
-//            for (var j=0;j<h;j++) {
-//                if (heatmap[i][j]) {
-//                    var x = i*2;
-//                    var y = j*2;
-//                    var grd = ctx.createRadialGradient(x+heatmap[i][j]/2,y+heatmap[i][j]/2,heatmap[i][j]/4,x+heatmap[i][j]/2,y+heatmap[i][j]/2,heatmap[i][j]/2);
-//                    grd.addColorStop(0,"rgba(255,0,0,1)");
-//                    grd.addColorStop(1,"rgba(255,0,0,0)");
-//
-//                    // Fill with gradient
-//                    ctx.fillStyle = grd;
-//                    ctx.fillRect(x,y,heatmap[i][j]*2,heatmap[i][j]*2);
-//                }
-//            }
-//        }
-//    };
-//    setInterval(function() {
-//        heatmap[actualX][actualY]++;
-//        redraw();
-//    }, 100);
      var ip;
      window.someRandomFuncion = function(json) {
          ip = json.ip;
@@ -135,9 +100,10 @@
             ip : ip,
             screenWidth: window.screen.availWidth,
             screenHeight: window.screen.availHeight,
-            browserWidth: window.screen.availWidth,
-            browserHeight: window.screen.availHeight,
-            startDate : yawpUtils.dateToYawpDate(new Date())
+            browserWidth: $(document).width(),
+            browserHeight: $(document).height(),
+            startDate : yawpUtils.dateToYawpDate(new Date()),
+            fullUrl : window.location.origin + window.location.pathname + window.location.hash
         };
     };
 
@@ -178,8 +144,6 @@
     var holding = false;
 
     $('body').mousemove(function(e) {
-//        actualX = parseInt(e.pageX/10);
-//        actualY = parseInt(e.pageY/10);
         actions.push(mouseAction(e, holding ? actionType.MOUSE_DRAG : actionType.MOUSE_MOVE));
     });
     
@@ -206,6 +170,16 @@
     $('button').click(function() {
         var recording = getUserInfo();
         recording.actions = actions;
-        yawp('/recordings').create(recording);
+        $.ajax({
+			type : 'POST',
+			url : 'http://discovering-1120.appspot.com/api/recordings',
+			data : JSON.stringify(recording),
+			contentType : 'application/json;charset=UTF-8',
+			dataType : 'json'
+		}).done(function(a,b,c) {
+            console.info(a,b,c)
+        }).fail(function(a,b,c){
+            console.info("sad",a,b,c)
+        });
     });
 });

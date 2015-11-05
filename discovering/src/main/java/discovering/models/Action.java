@@ -1,4 +1,4 @@
-package discover.models;
+package discovering.models;
 
 // Short variable names to save memory on javascript
 public class Action {

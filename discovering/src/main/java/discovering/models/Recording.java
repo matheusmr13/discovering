@@ -1,4 +1,4 @@
-package discover.models;
+package discovering.models;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +22,7 @@ public class Recording {
 	private String operatingSystem;
 	private String language;
 	private String ip;
+	private String fullUrl;
 
 	private Integer screenWidth;
 	private Integer screenHeight;
@@ -149,6 +150,14 @@ public class Recording {
 
 	public void setBrowserHeight(Integer browserHeight) {
 		this.browserHeight = browserHeight;
+	}
+
+	public String getFullUrl() {
+		return fullUrl;
+	}
+
+	public void setFullUrl(String fullUrl) {
+		this.fullUrl = fullUrl;
 	}
 
 }

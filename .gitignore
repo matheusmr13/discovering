@@ -1,10 +1,10 @@
-discover/.classpath
-discover/.project
-discover/.settings
-discover/node/**
-discover/node_modules/**
-discover/target-grunt/**
-discover/target
+discovering/.classpath
+discovering/.project
+discovering/.settings
+discovering/node/**
+discovering/node_modules/**
+discovering/target-grunt/**
+discovering/target
 .metadata/*
 .metadata/
 RemoteSystemsTempFiles/*
