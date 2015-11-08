@@ -14,11 +14,11 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EndpointServlet</servlet-name>
-		<url-pattern>/api/*</url-pattern>
+		<url-pattern>/discovering/api/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>EndpointServlet</servlet-name>
-		<url-pattern>/api/_tasks/*</url-pattern>
+		<url-pattern>/discovering/api/_tasks/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -46,11 +46,31 @@
 
 	<filter>
 		<filter-name>AuthenticationFilter</filter-name>
-		<filter-class>discovering.models.AuthenticationFilter</filter-class>
+		<filter-class>discovering.actions.AuthenticationFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>AuthenticationFilter</filter-name>
-		<url-pattern>/api/*</url-pattern>
+		<url-pattern>/discovering/api/*</url-pattern>
 	</filter-mapping>
+
+	<servlet>
+		<servlet-name>AuthEmailServlet</servlet-name>
+		<servlet-class>discovering.models.AuthEmailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthEmailServlet</servlet-name>
+		<url-pattern>/authEmail/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CreateRecordingServlet</servlet-name>
+		<servlet-class>discovering.actions.CreateRecordingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateRecordingServlet</servlet-name>
+		<url-pattern>api/recording/create</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>

@@ -29,6 +29,11 @@ public class Recording {
 	private Integer browserWidth;
 	private Integer browserHeight;
 
+	private String countryCode;
+	private String countryName;
+	private String latitude;
+	private String longitude;
+
 	@Json
 	private List<Action> actions;
 
@@ -158,6 +163,38 @@ public class Recording {
 
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	public String getCountryName() {
+		return countryName;
+	}
+
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 }
