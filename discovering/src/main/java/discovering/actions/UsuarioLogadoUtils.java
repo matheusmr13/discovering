@@ -1,12 +1,12 @@
 package discovering.actions;
 
-import discovering.models.Usuario;
+import discovering.models.User;
 
 public class UsuarioLogadoUtils {
 
-		public static final ThreadLocal<Usuario> USUARIO_LOGADO = new ThreadLocal<Usuario>();
+		public static final ThreadLocal<User> USUARIO_LOGADO = new ThreadLocal<User>();
 
-		public static Usuario getUsuarioLogado() {
+		public static User getUsuarioLogado() {
 			if (USUARIO_LOGADO.get() != null)
 				return USUARIO_LOGADO.get();
 

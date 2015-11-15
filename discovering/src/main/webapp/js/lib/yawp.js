@@ -1,10 +1,10 @@
-(function($) {
+(function ($) {
 
-	var baseUrl = '/api';
+	var baseUrl = '/discovering/api';
 
 	function config(callback) {
 		var c = {
-			baseUrl : function(url) {
+			baseUrl: function (url) {
 				baseUrl = url;
 			}
 		};
@@ -14,12 +14,12 @@
 
 	function defaultAjax(type, options) {
 		var request = $.ajax({
-			type : type,
-			url : baseUrl + options.url + (options.query ? '?' + $.param(options.query) : ''),
-			data : options.data,
-			async : options.async,
-			contentType : 'application/json;charset=UTF-8',
-			dataType : 'json'
+			type: type,
+			url: baseUrl + options.url + (options.query ? '?' + $.param(options.query) : ''),
+			data: options.data,
+			async: options.async,
+			contentType: 'application/json;charset=UTF-8',
+			dataType: 'json'
 		});
 
 		return request;
@@ -86,7 +86,7 @@
 		function first(callback) {
 			limit(1);
 
-			return list(function(objects) {
+			return list(function (objects) {
 				var object = objects.length == 0 ? null : objects[0];
 				if (callback) {
 					callback(object);
@@ -95,7 +95,7 @@
 		}
 
 		function only(callback) {
-			return list(function(objects) {
+			return list(function (objects) {
 				if (objects.length != 1) {
 					throw 'called only but got ' + objects.length + ' results';
 				}
@@ -106,15 +106,15 @@
 		}
 
 		return {
-			where : where,
-			order : order,
-			sort : sort,
-			limit : limit,
-			fetch : fetch,
-			list : list,
-			first : first,
-			only : only,
-			url : url
+			where: where,
+			order: order,
+			sort: sort,
+			limit: limit,
+			fetch: fetch,
+			list: list,
+			first: first,
+			only: only,
+			url: url
 		};
 	}
 
@@ -139,10 +139,10 @@
 		}
 
 		return {
-			create : create,
-			update : update,
-			patch : patch,
-			destroy : destroy
+			create: create,
+			update: update,
+			patch: patch,
+			destroy: destroy
 		};
 	}
 
@@ -174,11 +174,11 @@
 		}
 
 		return {
-			params : params,
-			get : get,
-			put : put,
-			post : post,
-			_delete : _delete
+			params: params,
+			get: get,
+			put: put,
+			post: post,
+			_delete: _delete
 		};
 	}
 
@@ -194,18 +194,18 @@
 		}
 
 		var ajaxOptions = {
-			url : normalize(baseArg)
+			url: normalize(baseArg)
 		}
 
 		function options() {
 			return ajaxOptions;
 		}
 
-		options.addQueryParameters = function(params) {
+		options.addQueryParameters = function (params) {
 			ajaxOptions.query = $.extend(ajaxOptions.query, params);
 		};
 
-		options.addQueryParameter = function(key, value) {
+		options.addQueryParameter = function (key, value) {
 			if (!ajaxOptions.query) {
 				ajaxOptions.query = {};
 			}
@@ -229,9 +229,9 @@
 		}
 
 		return $.extend({
-			from : from,
-			transform : transform,
-			sync : sync
+			from: from,
+			transform: transform,
+			sync: sync
 		}, query(options), repository(options), actions(options));
 	}
 
@@ -251,10 +251,10 @@
 	}
 
 	var api = {
-		config : config,
-		update : update,
-		patch : patch,
-		destroy : destroy
+		config: config,
+		update: update,
+		patch: patch,
+		destroy: destroy
 	};
 
 	window.yawp = $.extend(yawp, api);

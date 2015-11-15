@@ -1,27 +1,27 @@
 package discovering.actions;
 
 import io.yawp.repository.IdRef;
-import discovering.models.Usuario;
+import discovering.models.User;
 
 public class UsuarioVO {
 
-	private IdRef<Usuario> id;
+	private IdRef<User> id;
 	private String login;
 	private String email;
 	private String nomeCompleto;
 	private String telefoneCelular;
 	private String telefoneComercial;
 
-	public UsuarioVO(Usuario usuarioLogado) {
+	public UsuarioVO(User usuarioLogado) {
 		this.login = usuarioLogado.getLogin();
 		this.email = usuarioLogado.getEmail();
 	}
 
-	public IdRef<Usuario> getId() {
+	public IdRef<User> getId() {
 		return id;
 	}
 
-	public void setId(IdRef<Usuario> id) {
+	public void setId(IdRef<User> id) {
 		this.id = id;
 	}
 

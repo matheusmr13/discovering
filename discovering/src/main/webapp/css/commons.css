@@ -5,13 +5,6 @@
 	font-style: normal;
 }
 
-.clearfix:after {
-	content: " ";
-	display: block;
-	height: 0;
-	clear: both;
-}
-
 .col-1 {
 	width: 4.167%
 }
@@ -354,5 +347,5 @@ input:disabled {
 }
 
 .default-color {
-	color: #8F1CE0;
+	color: #8455C6;
 }

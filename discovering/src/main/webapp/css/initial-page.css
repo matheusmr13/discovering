@@ -1,5 +1,8 @@
+@import '/css/toastr.css';
+@import '/css/normalize.css';
 @import '/css/commons.css';
 @import '/css/form.css';
+@import '/css/font-awesome.min.css';
 body {
 	font-family: sans-serif;
 }

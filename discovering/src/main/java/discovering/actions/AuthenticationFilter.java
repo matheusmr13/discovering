@@ -19,11 +19,10 @@ import br.com.dextra.security.CredentialHolder;
 import br.com.dextra.security.exceptions.ExpiredAuthTokenException;
 import br.com.dextra.security.exceptions.InvalidAuthTokenException;
 
-import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import discovering.models.Usuario;
+import discovering.models.User;
 
 public class AuthenticationFilter extends br.com.dextra.security.AuthenticationFilter {
 
@@ -128,10 +127,10 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 	private boolean logouViaEmail(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		UserService userService = UserServiceFactory.getUserService();
-		User currentUser = userService.getCurrentUser();
+		com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
 
 		if (currentUser != null && temDominioValido(currentUser)) {
-			Usuario usuarioNoSistema = buscaUsuarioOuCriaNovo(userService, currentUser);
+			User usuarioNoSistema = buscaUsuarioOuCriaNovo(userService, currentUser);
 			UsuarioLogadoUtils.USUARIO_LOGADO.set(usuarioNoSistema);
 
 			chain.doFilter(request, response);
@@ -144,7 +143,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 	private void realizaLogin(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		UserService userService = UserServiceFactory.getUserService();
-		User currentUser = userService.getCurrentUser();
+		com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
 
 		if (currentUser == null || !temDominioValido(currentUser)) {
 			loginComEmailESenha(request, response, chain);
@@ -161,7 +160,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		}
 
 		try {
-			Usuario usuario = this.autenticacao(login, password);
+			User usuario = this.autenticacao(login, password);
 			UsuarioLogadoUtils.USUARIO_LOGADO.set(usuario);
 			if (usuario != null) {
 				chain.doFilter(request, response);
@@ -174,8 +173,8 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		}
 	}
 
-	private Usuario autenticacao(String email, String password) {
-		Usuario usuario = buscaUsuario(email);
+	private User autenticacao(String email, String password) {
+		User usuario = buscaUsuario(email);
 		if (usuario == null) {
 			throw new ValidacaoException("E-mail ou senha incorretos");
 		}
@@ -183,7 +182,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 //		if (usuario.getPerfil() != Perfil.COMISSAO)
 //			pass = CriptoUtils.senhaCriptografada(password);
 
-		if (!pass.equals(usuario.getSenha())) {
+		if (!pass.equals(usuario.getPassword())) {
 			throw new ValidacaoException("E-mail ou senha incorretos");
 		}
 
@@ -197,8 +196,8 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		response.getWriter().close();
 	}
 
-	private Usuario buscaUsuarioOuCriaNovo(UserService userService, User currentUser) {
-		Usuario usuarioNoSistema = buscaUsuario(currentUser);
+	private User buscaUsuarioOuCriaNovo(UserService userService, com.google.appengine.api.users.User currentUser) {
+		User usuarioNoSistema = buscaUsuario(currentUser);
 
 		if (usuarioNoSistema == null) {
 			usuarioNoSistema = novoUsuario(userService, currentUser);
@@ -207,16 +206,16 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		return usuarioNoSistema;
 	}
 
-	private Usuario buscaUsuario(User currentUser) {
+	private User buscaUsuario(com.google.appengine.api.users.User currentUser) {
 		return buscaUsuario(currentUser.getEmail());
 	}
 
-	private Usuario buscaUsuario(String email) {
-		return yawp.query(Usuario.class).where("login", "=", email).first();
+	private User buscaUsuario(String email) {
+		return yawp.query(User.class).where("login", "=", email).first();
 	}
 
-	private Usuario novoUsuario(UserService userService, User currentUser) {
-		Usuario usuario = new Usuario();
+	private User novoUsuario(UserService userService, com.google.appengine.api.users.User currentUser) {
+		User usuario = new User();
 
 		usuario.setLogin(currentUser.getEmail());
 		usuario.setEmail(currentUser.getEmail());
@@ -231,7 +230,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		return yawp.save(usuario);
 	}
 
-	private boolean temDominioValido(User currentUser) {
+	private boolean temDominioValido(com.google.appengine.api.users.User currentUser) {
 		String email = currentUser.getEmail();
 		if (StringUtils.isBlank(email) || email.indexOf("@") == -1) {
 			return false;
