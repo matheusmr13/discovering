@@ -1,0 +1,35 @@
+@import '/css/commons.css';
+@import '/css/form.css';
+body {
+	font-family: sans-serif;
+}
+
+.pattern {
+	background: url('/img/pattern.png') repeat;
+}
+
+.content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+	padding: 25px;
+	border: 1px solid #FFF;
+}
+
+a {
+	text-decoration: none;
+}
+
+.header {
+	text-align: center;
+	font-size: 40px;
+}
+
+.header img {
+	width: 60px;
+	vertical-align: middle;
+}

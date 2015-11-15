@@ -1,0 +1,15 @@
+import br.com.dextra.security.configuration.*;
+import br.com.dextra.security.utils.*;
+import java.io.*;
+import discovering.actions.*;
+
+String providerName = "DISCOVERING";
+
+certificateRepository = new PersistentCertificateRepository();
+configuration.setCertificateRepository(certificateRepository);
+
+configuration.setMyProvider(providerName);
+configuration.setNotAuthenticatedHandler(new LoggerForbiddenResponseHandler());
+configuration.setAuthenticationFailedHandler(new RedirectResponseHandler("/"));
+configuration.setAuthenticationExpiredHandler(new LoggerForbiddenResponseHandler());
+configuration.setCookieManager(new CookieManager());

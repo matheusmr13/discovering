@@ -1,0 +1,358 @@
+@font-face {
+	font-family: 'discovering';
+	src: url('/fonts/discovering.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+.col-1 {
+	width: 4.167%
+}
+
+.col-2 {
+	width: 8.334%
+}
+
+.col-3 {
+	width: 12.5%
+}
+
+.col-4 {
+	width: 16.668%
+}
+
+.col-5 {
+	width: 20.835%
+}
+
+.col-6 {
+	width: 25%
+}
+
+.col-7 {
+	width: 29.169%
+}
+
+.col-8 {
+	width: 33.336%
+}
+
+.col-9 {
+	width: 37.5%
+}
+
+.col-10 {
+	width: 41.67%
+}
+
+.col-11 {
+	width: 45.837%
+}
+
+.col-12 {
+	width: 50%
+}
+
+.col-13 {
+	width: 54.167%
+}
+
+.col-14 {
+	width: 58.338%
+}
+
+.col-15 {
+	width: 62.5%
+}
+
+.col-16 {
+	width: 66.666%
+}
+
+.col-17 {
+	width: 70.839%
+}
+
+.col-18 {
+	width: 75%
+}
+
+.col-19 {
+	width: 79.167%
+}
+
+.col-20 {
+	width: 83.34%
+}
+
+.col-21 {
+	width: 87.5%
+}
+
+.col-22 {
+	width: 91.667%
+}
+
+.col-23 {
+	width: 95.834%
+}
+
+.col-24 {
+	width: 100%
+}
+
+input:disabled {
+	background-color: #F0EDED;
+}
+
+.block {
+	display: block !important;
+}
+
+.inline {
+	display: inline !important;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+
+.float-right {
+	float: right;
+}
+
+.float-left {
+	float: left;
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.text-right {
+	text-align: right !important;
+}
+
+.text-justify {
+	text-align: justify !important;
+}
+
+.bold {
+	font-weight: bold !important;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.font-05 {
+	font-size: 0.5em;
+}
+
+.font-1 {
+	font-size: 0.8em;
+}
+
+.font-2 {
+	font-size: 1em;
+}
+
+.font-3 {
+	font-size: 1.2em;
+}
+
+.font-4 {
+	font-size: 1.4em;
+}
+
+.font-5 {
+	font-size: 1.6em;
+}
+
+.font-6 {
+	font-size: 1.8em;
+}
+
+.font-7 {
+	font-size: 2em;
+}
+
+.font-35 {
+	font-size: 3.5em;
+}
+
+.font-415 {
+	font-size: 4.15em;
+}
+
+.letter-spacing {
+	letter-spacing: 2px;
+}
+
+.margin-auto {
+	margin: auto;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+.margin {
+	margin: 20px;
+}
+
+.margin-left {
+	margin-left: 20px !important;
+}
+
+.margin-top {
+	margin-top: 20px;
+}
+
+.margin-right {
+	margin-right: 20px;
+}
+
+.margin-bottom {
+	margin-bottom: 20px;
+}
+
+.margin-small {
+	margin: 10px;
+}
+
+.margin-left-small {
+	margin-left: 10px;
+}
+
+.margin-top-small {
+	margin-top: 10px;
+}
+
+.margin-right-small {
+	margin-right: 10px;
+}
+
+.margin-bottom-small {
+	margin-bottom: 10px;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
+.padding:not(:empty) {
+	padding: 20px;
+}
+
+.padding-left {
+	padding-left: 20px;
+}
+
+.padding-top {
+	padding-top: 20px;
+}
+
+.padding-right {
+	padding-right: 20px;
+}
+
+.padding-bottom {
+	padding-bottom: 20px;
+}
+
+.padding-small:not(:empty) {
+	padding: 10px;
+}
+
+.padding-left-small {
+	padding-left: 10px;
+}
+
+.padding-top-small {
+	padding-top: 10px;
+}
+
+.padding-right-small {
+	padding-right: 10px;
+}
+
+.padding-bottom-small {
+	padding-bottom: 10px;
+}
+
+.no-border {
+	border: none !important;
+}
+
+.border-1 {
+	border: 1px solid #222;
+}
+
+.border-2 {
+	border: 2px solid #222;
+}
+
+.border-bottom-1 {
+	border-bottom: 1px solid #222;
+}
+
+.border-bottom-2 {
+	border-bottom: 2px solid #222;
+}
+
+.table-total {
+	background-color: rgba(255, 255, 255, 0.6) !important;
+	color: #222 !important;
+}
+
+.max-width {
+	width: 100% !important;
+}
+
+.display-none {
+	display: none !important;
+}
+
+.hid {
+	visibility: none;
+}
+
+.disappear {
+	opacity: 0;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.not-clickable {
+	cursor: default !important;
+}
+
+.vertical-align-top {
+	vertical-align: top;
+}
+
+.vertical-align-bottom {
+	vertical-align: bottom;
+}
+
+.custom-font {
+	font-family: 'discovering';
+}
+
+.default-color {
+	color: #8F1CE0;
+}
