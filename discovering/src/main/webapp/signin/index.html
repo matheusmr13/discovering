@@ -14,7 +14,7 @@
 	<div class="login-wrapper content" style="display:none;">
 		<a href="/">
 			<div class="header custom-font font-3 default-color">
-				<img src="/img/icon.png" class="header-logo"> Discovering
+				<img src="/img/icon-white.png" class="header-logo"> Discovering
 			</div>
 		</a>
 		<div class="form-control container text-center">
@@ -31,7 +31,7 @@
 			</label>
 			</span>
 			<div class="buttons text-center margin-bottom">
-				<a href="/" id="login" class="btn white margin-right">Back</a>
+				<a href="/" id="signin" class="btn white margin-right">Back</a>
 				<a id="login" class="btn green">Login</a>
 			</div>
 			<hr/>
@@ -52,7 +52,7 @@
 	<script>
 		$(document).ready(function () {
 			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
-				window.location = ['COMISSAO', 'FORMANDO'].indexOf(me.perfil) !== -1 ? '/formando/' : '/turing';
+				window.location = '/discovering/';
 			}).fail(function () {
 				$('.login-wrapper').show();
 
@@ -73,7 +73,7 @@
 					}
 				});
 
-				$('#login').unbind('click').click(function () {
+				$('#signin').unbind('click').click(function () {
 					$.ajax({
 						type: 'PUT',
 						url: '/discovering/auth',

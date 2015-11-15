@@ -12,7 +12,7 @@
 	<div class="login-wrapper content">
 		<a href="/">
 			<div class="header custom-font font-3 default-color">
-				<img src="/img/icon.png" class="header-logo"> Discovering
+				<img src="/img/icon-white.png" class="header-logo"> Discovering
 			</div>
 		</a>
 		<div class="form-control container text-center">
@@ -59,19 +59,25 @@
 	<script type="text/javascript" src="/js/lib/input-controller.js"></script>
 	<script>
 		$(document).ready(function () {
-			$('#register').unbind('click').click(function () {
-				if ($('#password').val() !== $('#confirm-password').val()) {
-					toastr.error('Confirmation password is differente from Password!');
-					return;
-				}
-				yawp('/users').create({
-					email: $('#email').val(),
-					login: $('#login').val(),
-					password: $('#password').val()
-				}).done(function () {
-					toastr.success('Your user has been created!');
-				}).fail(function () {
-					toastr.error('Something went wrong! Try again later!');
+			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
+				window.location = '/discovering/';
+			}).fail(function () {
+				$('.login-wrapper').show();
+
+				$('#register').unbind('click').click(function () {
+					if ($('#password').val() !== $('#confirm-password').val()) {
+						toastr.error('Confirmation password is differente from Password!');
+						return;
+					}
+					yawp('/users').create({
+						email: $('#email').val(),
+						login: $('#login').val(),
+						password: $('#password').val()
+					}).done(function () {
+						toastr.success('Your user has been created!');
+					}).fail(function () {
+						toastr.error('Something went wrong! Try again later!');
+					});
 				});
 			});
 		});

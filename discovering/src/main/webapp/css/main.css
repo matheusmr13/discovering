@@ -10,3 +10,25 @@ body {
 .pattern {
 	background: url('/img/pattern.png') repeat;
 }
+
+.background-opacity {
+	background-color: rgba(255, 255, 255, 0.9);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -999;
+}
+
+.navbar-default {
+	background-color: rgba(126, 79, 175, 0.8) !important;
+}
+
+#content {
+	max-width: 1200px;
+	background-color: rgba(255, 255, 255, 0.7);
+	height: calc(100vh - 51px);
+	margin: auto;
+	margin-top: 51px;
+}
