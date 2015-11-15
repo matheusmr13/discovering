@@ -19,14 +19,14 @@
 		</a>
 		<div class="form-control container text-center">
 			<span class="input input--juro center">
-					<input class="input__field input__field--juro" type="text" id="input-28" />
-					<label class="input__label input__label--juro" for="input-28">
+					<input class="input__field input__field--juro" type="text" id="login" />
+					<label class="input__label input__label--juro" for="login">
 						<span class="input__label-content input__label-content--juro">Login</span>
 			</label>
 			</span>
 			<span class="input input--juro center">
-					<input class="input__field input__field--juro" type="password" id="input-29" />
-					<label class="input__label input__label--juro" for="input-29">
+					<input class="input__field input__field--juro" type="password" id="password" />
+					<label class="input__label input__label--juro" for="password">
 						<span class="input__label-content input__label-content--juro">Password</span>
 			</label>
 			</span>
@@ -45,6 +45,8 @@
 		</div>
 	</div>
 
+	<script src="/js/lib/classie.js"></script>
+	<script src="/js/lib/input-controller.js"></script>
 	<script type="text/javascript " src="/js/lib/jquery-2.1.4.js " charset="utf-8 "></script>
 	<script type="text/javascript " src="/js/lib/toastr.js " charset="utf-8 "></script>
 	<script>
@@ -71,7 +73,7 @@
 					}
 				});
 
-				$('#login').click(function () {
+				$('#login').unbind('click').click(function () {
 					$.ajax({
 						type: 'PUT',
 						url: '/discovering/auth',
@@ -80,23 +82,15 @@
 							senha: $('#password-login').val()
 						}
 					}).done(function () {
-						window.location = '/formando';
+						window.location = '/discovering';
 					}).fail(function (e) {
 						toastr.error(e.responseText);
 						$('[name=email]').focus();
 					});
 				});
-
-				if (window.location.hash === '#email-invalido') {
-					toastr.error('Acesso negado para essa conta de e-mail');
-					window.location.hash = '';
-				}
 			});
 		});
 	</script>
-
-	<script src="/js/lib/classie.js"></script>
-	<script src="/js/lib/input-controller.js"></script>
 </body>
 
 </html>

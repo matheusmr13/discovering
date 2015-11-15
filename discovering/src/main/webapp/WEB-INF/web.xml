@@ -83,7 +83,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateRecordingServlet</servlet-name>
-		<url-pattern>api/recording/create</url-pattern>
+		<url-pattern>/api/recording/create</url-pattern>
 	</servlet-mapping>
 
 

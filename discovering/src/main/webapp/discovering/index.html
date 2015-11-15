@@ -1,0 +1,95 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body class="pattern">
+	<div class="login-wrapper content" style="display:none;">
+		<a href="/">
+			<div class="header custom-font font-3 default-color">
+				<img src="/img/icon.png" class="header-logo"> Discovering
+			</div>
+		</a>
+		<div class="form-control container text-center">
+			<span class="input input--juro center">
+					<input class="input__field input__field--juro" type="text" id="login" />
+					<label class="input__label input__label--juro" for="login">
+						<span class="input__label-content input__label-content--juro">Login</span>
+			</label>
+			</span>
+			<span class="input input--juro center">
+					<input class="input__field input__field--juro" type="password" id="password" />
+					<label class="input__label input__label--juro" for="password">
+						<span class="input__label-content input__label-content--juro">Password</span>
+			</label>
+			</span>
+			<div class="buttons text-center margin-bottom">
+				<a href="/" id="login" class="btn white margin-right">Back</a>
+				<a id="login" class="btn green">Login</a>
+			</div>
+			<hr/>
+			<div class="buttons text-center margin-top margin-bottom">
+				<a id="google-login" class="btn google"><i class="fa fa-google-plus-square"></i>Login with Google</a>
+			</div>
+			<hr/>
+			<div class="buttons text-center margin-top">
+				<a href="/signup" class="btn blue">Wanna create one?</a>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/lib/classie.js"></script>
+	<script src="/js/lib/input-controller.js"></script>
+	<script type="text/javascript " src="/js/lib/jquery-2.1.4.js " charset="utf-8 "></script>
+	<script type="text/javascript " src="/js/lib/toastr.js " charset="utf-8 "></script>
+	<script>
+		$(document).ready(function () {
+			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
+				window.location = ['COMISSAO', 'FORMANDO'].indexOf(me.perfil) !== -1 ? '/formando/' : '/turing';
+			}).fail(function () {
+				$('.login-wrapper').show();
+
+				$('#google-login').click(function () {
+					$.ajax({
+						type: 'GET',
+						url: '/authEmail/loginUrl'
+					}).done(function (url) {
+						window.location = url;
+					});
+
+					return false;
+				});
+
+				$('input[name="login "], input[name="password "]').keypress(function (e) {
+					if (e.keyCode === 13) {
+						$('#login').click();
+					}
+				});
+
+				$('#login').unbind('click').click(function () {
+					$.ajax({
+						type: 'PUT',
+						url: '/discovering/auth',
+						data: {
+							email: $('#email-login').val(),
+							senha: $('#password-login').val()
+						}
+					}).done(function () {
+						window.location = '/discovering';
+					}).fail(function (e) {
+						toastr.error(e.responseText);
+						$('[name=email]').focus();
+					});
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
