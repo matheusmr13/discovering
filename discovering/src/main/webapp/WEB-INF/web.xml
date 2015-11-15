@@ -3,6 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<context-param>
+		<param-name>security.configuration.bsh</param-name>
+		<param-value>security.bsh</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>EndpointServlet</servlet-name>
 		<servlet-class>io.yawp.servlet.EndpointServlet</servlet-class>
@@ -53,6 +58,15 @@
 		<filter-name>AuthenticationFilter</filter-name>
 		<url-pattern>/discovering/api/*</url-pattern>
 	</filter-mapping>
+
+	<servlet>
+		<servlet-name>AuthServlet</servlet-name>
+		<servlet-class>discovering.actions.AuthServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthServlet</servlet-name>
+		<url-pattern>/discovering/auth</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>AuthEmailServlet</servlet-name>

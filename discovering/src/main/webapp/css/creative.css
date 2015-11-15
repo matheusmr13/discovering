@@ -467,3 +467,22 @@ body {
 	margin: -13px 13px -10px -5px;
 	display: inline-block !important;
 }
+
+.navbar-default .highlight-menu {
+	background-color: #FFF;
+	-webkit-transition: all .35s;
+	-moz-transition: all .35s;
+	transition: all .35s;
+}
+
+.navbar-default .nav > li.highlight-menu > a {
+	color: #000;
+}
+
+.navbar-default.affix .highlight-menu {
+	background-color: #8F1CE0;
+}
+
+.navbar-default.affix .nav > li.highlight-menu > a {
+	color: #FFF;
+}

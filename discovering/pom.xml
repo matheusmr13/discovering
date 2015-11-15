@@ -8,6 +8,7 @@
 	<version>1</version>
 	<packaging>war</packaging>
 
+	<!-- Extract versions -->
 	<properties>
 		<app.id>discovering-1120</app.id>
 		<yawp.version>1.3.5</yawp.version>
@@ -40,12 +41,28 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5</version>
 		</dependency>
+			<dependency>
+			<groupId>br.com.dextra.security</groupId>
+			<artifactId>dxsecurity</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.beanshell</groupId>
+			<artifactId>bsh</artifactId>
+			<version>2.0b4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
 	</dependencies>
+
 
 	<build>
 		<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
