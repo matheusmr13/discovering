@@ -26,7 +26,7 @@ public class AuthServlet extends AuthenticationServlet {
 
 	@Override
 	protected Credential authenticate(HttpServletRequest request) throws AuthenticationFailedException {
-		return new Credential(request.getParameter("email"), configuration.getMyProvider());
+		return new Credential(request.getParameter("login"), configuration.getMyProvider());
 	}
 
 	@Override

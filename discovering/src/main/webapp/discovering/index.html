@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/navbar.css" />
 </head>
 
-<body class="pattern">
+<body class="pattern" style="display: none;">
 	<div class="background-opacity"></div>
 	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
@@ -26,21 +26,19 @@
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div id="user-content"></div>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a class="page-scroll" href="#" data-href="/discovering/">Home</a>
+						<a class="page-scroll" href="#">Home</a>
 					</li>
 					<li>
-						<a class="page-scroll" href="#" data-href="/discovering/services/">Recordings</a>
+						<a class="page-scroll" href="#recordings">Recordings</a>
 					</li>
 					<li>
-						<a class="page-scroll" href="#" data-href="/discovering/configuration/">Configuration</a>
+						<a class="page-scroll" href="#configuration">Configuration</a>
 					</li>
 					<li>
-						<a class="page-scroll" href="#" data-href="/discovering/support/">Support</a>
-					</li>
-					<li>
-						<a class="link"></a>
+						<a class="page-scroll" href="#support">Support</a>
 					</li>
 				</ul>
 			</div>
@@ -48,7 +46,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<div id=" content">
+	<div id="content">
 	</div>
 
 	<script src="/js/lib/classie.js"></script>
@@ -58,43 +56,11 @@
 	<script type="text/javascript" src="/js/navigation.js" charset="utf-8"></script>
 	<script>
 		$(document).ready(function () {
-			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
-				window.location = ['COMISSAO', 'FORMANDO'].indexOf(me.perfil) !== -1 ? '/formando/' : '/turing';
+			$.getJSON('/discovering/api/users/me').done(function (me) {
+				$('#user-content').html(me.login);
+				$('body').show();
 			}).fail(function () {
-				$('.login-wrapper').show();
-
-				$('#google-login').click(function () {
-					$.ajax({
-						type: 'GET',
-						url: '/authEmail/loginUrl'
-					}).done(function (url) {
-						window.location = url;
-					});
-
-					return false;
-				});
-
-				$('input[name="login"], input[name="password"]').keypress(function (e) {
-					if (e.keyCode === 13) {
-						$('#login').click();
-					}
-				});
-
-				$('#login').unbind('click').click(function () {
-					$.ajax({
-						type: 'PUT',
-						url: '/discovering/auth',
-						data: {
-							email: $('#email-login').val(),
-							senha: $('#password-login').val()
-						}
-					}).done(function () {
-						window.location = '/discovering';
-					}).fail(function (e) {
-						toastr.error(e.responseText);
-						$('[name=email]').focus();
-					});
-				});
+				window.location = '/signin/';
 			});
 		});
 	</script>

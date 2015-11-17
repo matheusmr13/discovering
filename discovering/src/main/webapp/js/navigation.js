@@ -2,26 +2,56 @@
 
 	'use strict';
 
+	var extractParameters = function (paramsStr) {
+		if (!paramsStr) {
+			return {};
+		}
 
-	var popped = ('state' in window.history && window.history.state !== null),
-		initialURL = location.href;
-	var popstate = function (e) {
-		var initialPop = !popped && location.href == initialURL
-		console.info(popped);
-		popped = true;
-		console.info(popped);
-		console.info(window.location.href);
-		if (initialPop) return;
-		return false;
+		var paramsWithNames = paramsStr.split('&'),
+			params = {};
+		for (var i = 0; i < paramsWithNames.length; i++) {
+			var param = paramsWithNames[i].split('=');
+			params[param[0]] = param[1];
+		}
+
+		return params;
 	};
 
-	window.onpopstate = popstate;
+	var changeHeaderMenu = function (page) {
+		var $this = $('.nav a[href^="#' + page + '"]').parent();
+		$this.addClass('selected').siblings().removeClass('selected');
+	};
 
-	$('body').on('click', 'a', function () {
-		console.info($(this));
-		var a = $(this);
-		popstate(a.data('href'));
-		return false;
-	});
+	var openPage = function (hash, params) {
+		$.get('/discovering/' + hash + '.html').done(function (page) {
+			$('#content').html(page);
+		});
+	};
+
+	function open(hash, params) {
+		changeHeaderMenu(hash);
+		openPage(hash, params);
+	};
+
+	function hashchange() {
+		var hashAndParams = window.location.hash + '';
+		if (!hashAndParams) {
+			return;
+		}
+
+		hashAndParams = hashAndParams.slice(1).split('?');
+		var hash = hashAndParams[0],
+			params = extractParameters(hashAndParams[1]);
+
+		if (!hash) {
+			window.location = $('body > header ul li a[href]:first').attr('href');
+			return;
+		}
+
+		open(hash, params);
+	};
+
+	window.onhashchange = hashchange;
+	window.onhashchange();
 
 }).apply(window, [window.jQuery]);

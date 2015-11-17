@@ -7,7 +7,7 @@ import discovering.models.User;
 public class UsuarioAction extends Action<User> {
 
 	@GET("me")
-	public UsuarioVO me() {
-		return new UsuarioVO(UsuarioLogadoUtils.getUsuarioLogado());
+	public UserVO me() {
+		return new UserVO(UsuarioLogadoUtils.getUsuarioLogado());
 	}
 }

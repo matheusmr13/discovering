@@ -59,7 +59,7 @@
 	<script type="text/javascript" src="/js/lib/input-controller.js"></script>
 	<script>
 		$(document).ready(function () {
-			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
+			$.getJSON('/discovering/api/users/me').done(function (me) {
 				window.location = '/discovering/';
 			}).fail(function () {
 				$('.login-wrapper').show();
@@ -69,10 +69,14 @@
 						toastr.error('Confirmation password is differente from Password!');
 						return;
 					}
-					yawp('/users').create({
-						email: $('#email').val(),
-						login: $('#login').val(),
-						password: $('#password').val()
+					$.ajax({
+						type: 'POST',
+						url: '/api/register',
+						data: {
+							email: $('#email').val(),
+							login: $('#login').val(),
+							password: $('#password').val()
+						}
 					}).done(function () {
 						toastr.success('Your user has been created!');
 					}).fail(function () {

@@ -1,6 +1,5 @@
 package discovering.actions;
 
-import io.yawp.commons.utils.JsonUtils;
 import io.yawp.repository.EndpointScanner;
 import io.yawp.repository.Repository;
 
@@ -13,30 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpStatus;
 
-import discovering.models.Recording;
+import discovering.models.User;
 
-public class CreateRecordingServlet extends HttpServlet {
+public class CreateUserServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 463643468198227006L;
 	private static Repository yawp = Repository.r().setFeatures(new EndpointScanner("").enableHooks(true).scan());
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.setHeader("Access-Control-Allow-Origin", "http://gae-example-990.appspot.com");//TODO Change to only registered servers
-		res.setHeader("Access-Control-Allow-Methods", "POST,GET");
-		res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		res.setHeader("Access-Control-Max-Age", "86400");
-
-		//TODO Verifications
-		Recording recording = JsonUtils.from(yawp, req.getParameter("recording"), Recording.class);
-		yawp.save(recording);
+		User user = new User();
+		user.setEmail(req.getParameter("email"));
+		user.setLogin(req.getParameter("login"));
+		user.setPassword(req.getParameter("password"));
+		yawp.saveWithHooks(user);
 
 		res.setStatus(HttpStatus.SC_OK);
 	}
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.getWriter().write("asdasdasdas");// FIXME
 		res.setStatus(HttpStatus.SC_OK);
 	}
 }

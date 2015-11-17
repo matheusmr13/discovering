@@ -33,20 +33,9 @@
  		INPUT_KEY: 'IK'
  	};
  	var ip;
- 	var countryCode;
- 	var countryName;
- 	var latitude;
- 	var longitude;
- 	window.someRandomFuncion = function (json) {
- 		ip = json.ip;
- 		$.get('http://freegeoip.net/json/' + ip).done(function (location) {
- 			countryCode = location.countryCode;
- 			countryName = location.countryName;
- 			latitude = location.latitude;
- 			longitude = location.longitude;
- 		});
- 	};
- 	$('body').append('<script type="application/javascript" src="http://www.telize.com/jsonip?callback=someRandomFuncion"></script>');
+ 	$.get("http://ipinfo.io", function (response) {
+ 		ip = response.ip;
+ 	}, "jsonp");
 
  	var getUserInfo = function () {
  		var nVer = navigator.appVersion;

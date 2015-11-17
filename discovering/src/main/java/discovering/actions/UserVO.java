@@ -3,7 +3,7 @@ package discovering.actions;
 import io.yawp.repository.IdRef;
 import discovering.models.User;
 
-public class UsuarioVO {
+public class UserVO {
 
 	private IdRef<User> id;
 	private String login;
@@ -12,7 +12,7 @@ public class UsuarioVO {
 	private String telefoneCelular;
 	private String telefoneComercial;
 
-	public UsuarioVO(User usuarioLogado) {
+	public UserVO(User usuarioLogado) {
 		this.login = usuarioLogado.getLogin();
 		this.email = usuarioLogado.getEmail();
 	}

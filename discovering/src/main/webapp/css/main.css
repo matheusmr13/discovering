@@ -22,7 +22,11 @@ body {
 }
 
 .navbar-default {
-	background-color: rgba(126, 79, 175, 0.8) !important;
+	background-color: rgb(126, 79, 175) !important;
+}
+
+.selected {
+	background-color: #FFF;
 }
 
 #content {
@@ -31,4 +35,5 @@ body {
 	height: calc(100vh - 51px);
 	margin: auto;
 	margin-top: 51px;
+	padding: 15px;
 }

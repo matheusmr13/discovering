@@ -31,8 +31,8 @@
 			</label>
 			</span>
 			<div class="buttons text-center margin-bottom">
-				<a href="/" id="signin" class="btn white margin-right">Back</a>
-				<a id="login" class="btn green">Login</a>
+				<a href="/" class="btn white margin-right">Back</a>
+				<a id="signin" class="btn green">Login</a>
 			</div>
 			<hr/>
 			<div class="buttons text-center margin-top margin-bottom">
@@ -51,7 +51,7 @@
 	<script type="text/javascript " src="/js/lib/toastr.js " charset="utf-8 "></script>
 	<script>
 		$(document).ready(function () {
-			$.getJSON('/discovering/api/usuarios/me').done(function (me) {
+			$.getJSON('/discovering/api/users/me').done(function (me) {
 				window.location = '/discovering/';
 			}).fail(function () {
 				$('.login-wrapper').show();
@@ -67,7 +67,7 @@
 					return false;
 				});
 
-				$('input[name="login "], input[name="password "]').keypress(function (e) {
+				$('input[name="login"], input[name="password"]').keypress(function (e) {
 					if (e.keyCode === 13) {
 						$('#login').click();
 					}
@@ -78,14 +78,13 @@
 						type: 'PUT',
 						url: '/discovering/auth',
 						data: {
-							email: $('#email-login').val(),
-							senha: $('#password-login').val()
+							login: $('#login').val(),
+							password: $('#password').val()
 						}
 					}).done(function () {
 						window.location = '/discovering';
 					}).fail(function (e) {
 						toastr.error(e.responseText);
-						$('[name=email]').focus();
 					});
 				});
 			});

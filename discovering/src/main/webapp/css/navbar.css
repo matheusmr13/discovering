@@ -109,3 +109,21 @@
 .navbar-default.affix .nav > li.highlight-menu > a {
 	color: #FFF;
 }
+
+.navbar-default #user-content {
+	float: right;
+	margin-right: -15px;
+	margin-left: 15px;
+	padding: 13px 0;
+	width: 200px;
+	text-align: center;
+	color: rgb(126, 79, 175);
+	background-color: rgba(255, 255, 255, 0.8);
+	font-weight: bold;
+	font-size: 17px;
+	cursor: pointer;
+}
+
+.navbar-default #user-content:hover {
+	background-color: rgba(255, 255, 255, 0.9);
+}

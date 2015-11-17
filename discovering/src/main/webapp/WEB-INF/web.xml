@@ -86,5 +86,14 @@
 		<url-pattern>/api/recording/create</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<servlet-class>discovering.actions.CreateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<url-pattern>/api/register</url-pattern>
+	</servlet-mapping>
+
 
 </web-app>

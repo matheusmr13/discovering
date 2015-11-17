@@ -32,46 +32,31 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 
 	protected void process(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
-		if (request.getRequestURI().contains("/auth")) {
+		if (!loginWithToken(request, response, chain)) {
+			loggedWithGoogle(request, response, chain);
+		} else if (request.getRequestURI().contains("/auth")) {
 			if (request.getRequestURI().contains("/logout")) {
-				deslogar(request, response);
+				logout(request, response);
 			} else {
-				realizaLogin(request, response, chain);
+				login(request, response, chain);
 			}
-		} else if (possuiTokenValido(request)) {
-			response.setHeader("Access-Control-Allow-Origin", "*");
-			response.setHeader("Access-Control-Allow-Methods", "POST,GET");
-			response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-			response.setHeader("Access-Control-Max-Age", "86400");
-			chain.doFilter(request, response);
-		} else if (!logouViaEmail(request, response, chain)) {
-			logaViaToken(request, response, chain);
-		} else {
-			sendErrorMessage(response, "erro");
 		}
-		//TODO rever ordem prioridade
 	}
 
-	private boolean possuiTokenValido(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	private void deslogar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		getConfiguration().getCookieManager().expireCookies(request, response);
-		UsuarioLogadoUtils.USUARIO_LOGADO.remove();
+		UsuarioLogadoUtils.LOGGED_USER.remove();
 		CredentialHolder.deregister();
 
 		response.getWriter().write("/");
 	}
 
-	private void logaViaToken(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
+	private boolean loginWithToken(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		String token = extractAuthTokenFrom(request);
 
 		if (StringUtils.isBlank(token)) {
-			response.sendRedirect("/#email-invalido");
-			return;
+			return false;
 		}
 
 		Credential credential;
@@ -81,20 +66,14 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		} catch (InvalidAuthTokenException e) {
 			logger.log(Level.WARNING, "Invalid authentication token received. " + e.getMessage());
 			getConfiguration().getCookieManager().expireCookies(request, response);
-			sendError(request, response);
-			response.sendRedirect("/#email-invalido");
-			return;
+			return false;
 		} catch (ExpiredAuthTokenException e) {
 			logger.log(Level.WARNING, "Expired authentication token received.", e);
 			getConfiguration().getCookieManager().expireCookies(request, response);
-			sendExpiryError(request, response, token);
-			response.sendRedirect("/#email-invalido");
-			return;
+			return false;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Error while processing the received authentication token : " + token, e);
-			getConfiguration().getCookieManager().expireCookies(request, response);
-			response.sendRedirect("/#email-invalido");
-			return;
+			return false;
 		}
 
 		try {
@@ -104,19 +83,18 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Error while processing the received authentication token : " + token, e);
-			sendError(request, response);
-			response.sendRedirect("/#email-invalido");
-			return;
+			return false;
 		}
 
 		try {
 			String email = token.split("\\|")[0];
-			UsuarioLogadoUtils.USUARIO_LOGADO.set(buscaUsuario(email));
+			UsuarioLogadoUtils.LOGGED_USER.set(fetchUserByEmail(email));
 			CredentialHolder.register(credential);
 			chain.doFilter(request, response);
 		} finally {
 			CredentialHolder.deregister();
 		}
+		return true;
 	}
 
 	@Override
@@ -124,35 +102,36 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		return getConfiguration().getCookieManager().extractAuthTokenFromCookie(request);
 	}
 
-	private boolean logouViaEmail(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
+	private boolean loggedWithGoogle(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		UserService userService = UserServiceFactory.getUserService();
-		com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
+		com.google.appengine.api.users.User googleCurrentUser = userService.getCurrentUser();
 
-		if (currentUser != null && temDominioValido(currentUser)) {
-			User usuarioNoSistema = buscaUsuarioOuCriaNovo(userService, currentUser);
-			UsuarioLogadoUtils.USUARIO_LOGADO.set(usuarioNoSistema);
+		if (googleCurrentUser != null) {
+			User systemUser = fetchUserOrCreateNew(userService, googleCurrentUser);
+			UsuarioLogadoUtils.LOGGED_USER.set(systemUser);
 
 			chain.doFilter(request, response);
 			return true;
 		}
-
+		sendError(request, response);
+		response.sendRedirect("/signin/");
 		return false;
 	}
 
-	private void realizaLogin(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
+	private void login(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		UserService userService = UserServiceFactory.getUserService();
-		com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
+		com.google.appengine.api.users.User googleCurrentUser = userService.getCurrentUser();
 
-		if (currentUser == null || !temDominioValido(currentUser)) {
+		if (googleCurrentUser == null) {
 			loginComEmailESenha(request, response, chain);
 		}
 	}
 
 	private void loginComEmailESenha(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException {
-		String login = request.getParameter("email");
-		String password = request.getParameter("senha");
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
 
 		if (login == null && password == null) {
 			sendError(request, response);
@@ -160,30 +139,27 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		}
 
 		try {
-			User usuario = this.autenticacao(login, password);
-			UsuarioLogadoUtils.USUARIO_LOGADO.set(usuario);
-			if (usuario != null) {
+			User user = this.auth(login, password);
+			UsuarioLogadoUtils.LOGGED_USER.set(user);
+			if (user != null) {
 				chain.doFilter(request, response);
 			}
-		} catch (ValidacaoException e) {
+		} catch (ValidationException e) {
 			sendErrorMessage(response, e.getText());
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Erro executanto autenticacao", e);
+			logger.log(Level.SEVERE, "Authentication error!", e);
 			sendError(request, response);
 		}
 	}
 
-	private User autenticacao(String email, String password) {
-		User usuario = buscaUsuario(email);
+	private User auth(String email, String password) {
+		User usuario = fetchUserByEmail(email);
 		if (usuario == null) {
-			throw new ValidacaoException("E-mail ou senha incorretos");
+			throw new ValidationException("Invalid login or password!");
 		}
-		String pass = password;
-//		if (usuario.getPerfil() != Perfil.COMISSAO)
-//			pass = CriptoUtils.senhaCriptografada(password);
 
-		if (!pass.equals(usuario.getPassword())) {
-			throw new ValidacaoException("E-mail ou senha incorretos");
+		if (!CriptoUtils.sha256(password).equals(usuario.getPassword())) {
+			throw new ValidationException("Invalid login or password!");
 		}
 
 		return usuario;
@@ -196,7 +172,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		response.getWriter().close();
 	}
 
-	private User buscaUsuarioOuCriaNovo(UserService userService, com.google.appengine.api.users.User currentUser) {
+	private User fetchUserOrCreateNew(UserService userService, com.google.appengine.api.users.User currentUser) {
 		User usuarioNoSistema = buscaUsuario(currentUser);
 
 		if (usuarioNoSistema == null) {
@@ -207,11 +183,11 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 	}
 
 	private User buscaUsuario(com.google.appengine.api.users.User currentUser) {
-		return buscaUsuario(currentUser.getEmail());
+		return fetchUserByEmail(currentUser.getEmail());
 	}
 
-	private User buscaUsuario(String email) {
-		return yawp.query(User.class).where("login", "=", email).first();
+	private User fetchUserByEmail(String login) {
+		return yawp.query(User.class).where("login", "=", login).first();
 	}
 
 	private User novoUsuario(UserService userService, com.google.appengine.api.users.User currentUser) {
@@ -221,23 +197,6 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 		usuario.setEmail(currentUser.getEmail());
 		usuario.setAdmin(userService.isUserAdmin());
 
-//		if (usuario.getAdmin()) {
-//			usuario.setPerfil(Perfil.ADMINISTRADOR);
-//		} else {
-//			usuario.setPerfil(Perfil.INDEFINIDO);
-//		}
-
 		return yawp.save(usuario);
 	}
-
-	private boolean temDominioValido(com.google.appengine.api.users.User currentUser) {
-		String email = currentUser.getEmail();
-		if (StringUtils.isBlank(email) || email.indexOf("@") == -1) {
-			return false;
-		}
-
-		String dominio = email.split("@")[1];
-		return dominio.contains("b2agencia") || dominio.contains("dextra-sw");
-	}
-
 }
