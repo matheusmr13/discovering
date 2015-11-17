@@ -110,6 +110,10 @@
 }
 /* INPUT CUSTOMIZATION*/
 
+.input.full-width {
+	max-width: 100%;
+}
+
 .input.center {
 	margin: 1em auto;
 }
@@ -199,8 +203,7 @@
 .input__label--juro {
 	padding: 0;
 	width: 100%;
-	height: 100%;
-	background: #fff;
+	background: rgba(132, 85, 198, 0.12);
 	text-align: left;
 }
 

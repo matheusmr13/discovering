@@ -3,6 +3,8 @@
 @import '/css/commons.css';
 @import '/css/form.css';
 @import '/css/font-awesome.min.css';
+@import '/css/navbar.css';
+@import '/css/bootstrap.min.css';
 body {
 	font-family: sans-serif;
 }
@@ -26,7 +28,7 @@ body {
 }
 
 .selected {
-	background-color: #FFF;
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 #content {
@@ -36,4 +38,9 @@ body {
 	margin: auto;
 	margin-top: 51px;
 	padding: 15px;
+}
+
+h1 {
+	font-family: 'discovering' !important;
+	margin: 0 10px !important;
 }

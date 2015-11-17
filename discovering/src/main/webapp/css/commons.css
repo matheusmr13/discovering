@@ -101,10 +101,6 @@
 	width: 100%
 }
 
-input:disabled {
-	background-color: #F0EDED;
-}
-
 .block {
 	display: block !important;
 }
@@ -343,7 +339,7 @@ input:disabled {
 }
 
 .custom-font {
-	font-family: 'discovering';
+	font-family: 'discovering' !important;
 }
 
 .default-color {

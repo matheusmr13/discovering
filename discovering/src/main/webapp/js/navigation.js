@@ -18,7 +18,8 @@
 	};
 
 	var changeHeaderMenu = function (page) {
-		var $this = $('.nav a[href^="#' + page + '"]').parent();
+		console.info(page);
+		var $this = $('.nav a[href="#' + page + '"]').parent();
 		$this.addClass('selected').siblings().removeClass('selected');
 	};
 
@@ -44,7 +45,7 @@
 			params = extractParameters(hashAndParams[1]);
 
 		if (!hash) {
-			window.location = $('body > header ul li a[href]:first').attr('href');
+			window.location = $('body .nav a[href]:first').attr('href');
 			return;
 		}
 
