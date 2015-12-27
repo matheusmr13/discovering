@@ -32,7 +32,7 @@
 						<a class="page-scroll" href="#recordings">Recordings</a>
 					</li>
 					<li>
-						<a class="page-scroll" href="#configuration">Configuration</a>
+						<a class="page-scroll" href="#settings">Settings</a>
 					</li>
 					<li>
 						<a class="page-scroll" href="#support">Support</a>
@@ -48,9 +48,20 @@
 
 	<script type="text/javascript" src="/js/lib/jquery-2.1.4.js" charset="utf-8"></script>
 	<script type="text/javascript" src="/js/lib/toastr.js" charset="utf-8"></script>
-	<script type="text/javascript" src="/js/navigation.js" charset="utf-8"></script>
 	<script type="text/javascript" src="/js/lib/classie.js" charset="utf-8"></script>
 	<script type="text/javascript" src="/js/lib/input-controller.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/js/lib/yawp.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/js/lib/yawp-utils.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/js/lib/doT.js" charset="utf-8"></script>
+
+	<!-- Pages -->
+	<script type="text/javascript" src="/js/pages/settings.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/js/pages/recordings.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/js/pages/home.js" charset="utf-8"></script>
+	<!-- END Pages -->
+
+	<script type="text/javascript" src="/js/navigation.js" charset="utf-8"></script>
+
 	<script>
 		$(document).ready(function () {
 			$.getJSON('/discovering/api/users/me').done(function (me) {

@@ -1,4 +1,4 @@
-package discovering.actions;
+package discovering.authentication;
 
 import io.yawp.repository.EndpointScanner;
 import io.yawp.repository.Repository;
@@ -22,7 +22,10 @@ import br.com.dextra.security.exceptions.InvalidAuthTokenException;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-import discovering.models.User;
+import discovering.exceptions.ValidationException;
+import discovering.user.User;
+import discovering.utils.CriptoUtils;
+import discovering.utils.LoggedUserUtils;
 
 public class AuthenticationFilter extends br.com.dextra.security.AuthenticationFilter {
 
@@ -45,7 +48,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		getConfiguration().getCookieManager().expireCookies(request, response);
-		UsuarioLogadoUtils.LOGGED_USER.remove();
+		LoggedUserUtils.LOGGED_USER.remove();
 		CredentialHolder.deregister();
 
 		response.getWriter().write("/");
@@ -88,7 +91,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 
 		try {
 			String email = token.split("\\|")[0];
-			UsuarioLogadoUtils.LOGGED_USER.set(fetchUserByEmail(email));
+			LoggedUserUtils.LOGGED_USER.set(fetchUserByEmail(email));
 			CredentialHolder.register(credential);
 			chain.doFilter(request, response);
 		} finally {
@@ -109,7 +112,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 
 		if (googleCurrentUser != null) {
 			User systemUser = fetchUserOrCreateNew(userService, googleCurrentUser);
-			UsuarioLogadoUtils.LOGGED_USER.set(systemUser);
+			LoggedUserUtils.LOGGED_USER.set(systemUser);
 
 			chain.doFilter(request, response);
 			return true;
@@ -140,7 +143,7 @@ public class AuthenticationFilter extends br.com.dextra.security.AuthenticationF
 
 		try {
 			User user = this.auth(login, password);
-			UsuarioLogadoUtils.LOGGED_USER.set(user);
+			LoggedUserUtils.LOGGED_USER.set(user);
 			if (user != null) {
 				chain.doFilter(request, response);
 			}

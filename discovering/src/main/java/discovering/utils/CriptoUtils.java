@@ -1,4 +1,4 @@
-package discovering.actions;
+package discovering.utils;
 
 import java.util.UUID;
 

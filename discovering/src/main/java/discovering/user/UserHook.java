@@ -1,6 +1,7 @@
-package discovering.actions;
+package discovering.user;
 
-import discovering.models.User;
+import discovering.exceptions.ValidationException;
+import discovering.utils.CriptoUtils;
 import io.yawp.repository.hooks.Hook;
 
 public class UserHook extends Hook<User> {

@@ -1,4 +1,4 @@
-package discovering.actions;
+package discovering.exceptions;
 
 import io.yawp.commons.http.HttpException;
 

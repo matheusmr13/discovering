@@ -1,4 +1,4 @@
-package discovering.actions;
+package discovering.authentication;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

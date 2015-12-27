@@ -3,11 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<context-param>
-		<param-name>security.configuration.bsh</param-name>
-		<param-value>security.bsh</param-value>
-	</context-param>
-
+	<!-- YAWP CONFIGURATION -->
 	<servlet>
 		<servlet-name>EndpointServlet</servlet-name>
 		<servlet-class>io.yawp.servlet.EndpointServlet</servlet-class>
@@ -49,9 +45,16 @@
 		<url-pattern>/fixtures/delete_all</url-pattern>
 	</servlet-mapping>
 
+	<!-- END YAWP CONFIGURATIONS -->
+	<!-- AUTHENTICATION -->
+	<context-param>
+		<param-name>security.configuration.bsh</param-name>
+		<param-value>security.bsh</param-value>
+	</context-param>
+
 	<filter>
 		<filter-name>AuthenticationFilter</filter-name>
-		<filter-class>discovering.actions.AuthenticationFilter</filter-class>
+		<filter-class>discovering.authentication.AuthenticationFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -61,7 +64,7 @@
 
 	<servlet>
 		<servlet-name>AuthServlet</servlet-name>
-		<servlet-class>discovering.actions.AuthServlet</servlet-class>
+		<servlet-class>discovering.authentication.AuthServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AuthServlet</servlet-name>
@@ -70,16 +73,18 @@
 
 	<servlet>
 		<servlet-name>AuthEmailServlet</servlet-name>
-		<servlet-class>discovering.models.AuthEmailServlet</servlet-class>
+		<servlet-class>discovering.authentication.AuthEmailServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AuthEmailServlet</servlet-name>
 		<url-pattern>/authEmail/*</url-pattern>
 	</servlet-mapping>
 
+	<!-- END AUTHENTICATION -->
+	<!-- SERVICES -->
 	<servlet>
 		<servlet-name>CreateRecordingServlet</servlet-name>
-		<servlet-class>discovering.actions.CreateRecordingServlet</servlet-class>
+		<servlet-class>discovering.recording.CreateRecordingServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateRecordingServlet</servlet-name>
@@ -88,12 +93,13 @@
 
 	<servlet>
 		<servlet-name>CreateUserServlet</servlet-name>
-		<servlet-class>discovering.actions.CreateUserServlet</servlet-class>
+		<servlet-class>discovering.user.CreateUserServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateUserServlet</servlet-name>
 		<url-pattern>/api/register</url-pattern>
 	</servlet-mapping>
+	<!-- END SERVICES -->
 
 
 </web-app>

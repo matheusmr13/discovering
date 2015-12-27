@@ -1,4 +1,4 @@
-package discovering.models;
+package discovering.recording;
 
 import java.util.Date;
 import java.util.List;

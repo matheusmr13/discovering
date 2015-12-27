@@ -1,7 +1,6 @@
-package discovering.actions;
+package discovering.user;
 
 import io.yawp.repository.IdRef;
-import discovering.models.User;
 
 public class UserVO {
 

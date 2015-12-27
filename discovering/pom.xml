@@ -11,7 +11,7 @@
 	<!-- Extract versions -->
 	<properties>
 		<app.id>discovering-1120</app.id>
-		<yawp.version>1.3.5</yawp.version>
+		<yawp.version>1.3.18</yawp.version>
 		<appengine.app.version>1</appengine.app.version>
 		<appengine.sdk.version>1.9.25</appengine.sdk.version>
 		<appengine.target.version>1.9.25</appengine.target.version>

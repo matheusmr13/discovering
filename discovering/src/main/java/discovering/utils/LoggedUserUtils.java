@@ -1,8 +1,9 @@
-package discovering.actions;
+package discovering.utils;
 
-import discovering.models.User;
+import discovering.exceptions.ValidationException;
+import discovering.user.User;
 
-public class UsuarioLogadoUtils {
+public class LoggedUserUtils {
 
 		public static final ThreadLocal<User> LOGGED_USER = new ThreadLocal<User>();
 

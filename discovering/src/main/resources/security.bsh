@@ -1,7 +1,7 @@
 import br.com.dextra.security.configuration.*;
 import br.com.dextra.security.utils.*;
 import java.io.*;
-import discovering.actions.*;
+import discovering.authentication.*;
 
 String providerName = "DISCOVERING";
 

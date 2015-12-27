@@ -1,4 +1,4 @@
-package discovering.models;
+package discovering.authentication;
 
 import java.io.IOException;
 

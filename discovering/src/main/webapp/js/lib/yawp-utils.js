@@ -88,9 +88,7 @@
 			if (a.length == 1) {
 				d = new Date(args[2], args[1] - 1,args[0]);
 			} else {
-				console.info("ASDAS");
 				var splitTime = a[1].split(':');
-				console.info(splitTime);
 				d = new Date(a[0], args[1] - 1, args[0], splitTime[0], splitTime[1], splitTime[2]);
 			}
 

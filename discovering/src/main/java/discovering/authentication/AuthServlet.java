@@ -1,4 +1,4 @@
-package discovering.actions;
+package discovering.authentication;
 
 import java.io.IOException;
 
