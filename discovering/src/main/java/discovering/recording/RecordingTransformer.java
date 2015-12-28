@@ -7,11 +7,17 @@ import java.util.Map;
 public class RecordingTransformer extends Transformer<Recording> {
 
 	@Override
-	public Object defaults(Recording object) {
-		Map<String, Object> map = asMap(object);
-		map.put("browser", object.getBrowser().toUpperCase());
-		return map;
+	public Recording create(Recording recording) {
+		return null;
 	}
 
+	@Override
+	public Recording update(Recording recording) {
+		return null;
+	}
+
+	public RecordingListVO list(Recording recording) {
+		return new RecordingListVO(recording);
+	}
 
 }

@@ -1,0 +1,74 @@
+table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+table tr:last-child td:last-child {
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+table tr th:last-child {
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+table tr th:first-child {
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-top-left-radius: 5px
+}
+
+table th {
+	vertical-align: middle;
+	padding: 5px;
+	background-color: rgba(126, 79, 175, 0.8);
+	color: #FFF;
+	text-align: center;
+}
+
+table tr th:not(:first-child) {
+	border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+table tr td:not(:first-child) {
+	border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+tr:nth-child(even) {
+	background-color: rgba(126, 79, 175, 0.1);
+}
+
+tr:nth-child(odd) {
+	background-color: rgba(126, 79, 175, 0.03);
+}
+
+table {
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+table tr td {
+	padding: 5px;
+	vertical-align: middle;
+}
+
+table tbody tr.totalizador:last-child td {
+	background-color: rgba(0, 0, 0, 0.9);
+	color: #FFF;
+	font-weight: bold;
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table tr td.actions {
+	text-align: center;
+}
+
+table tr td.actions i.fa {
+	font-size 10px;
+	margin: 0 5px;
+	cursor: pointer;
+}

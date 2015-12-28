@@ -1,47 +1,24 @@
 <h1 class="custom-font">Recordings</h1>
 <div>
-	<table>
+	<table class="margin-top col-24">
 		<thead>
-			<th>startDate</th>
-			<th>browser</th>
-			<th>version</th>
-			<th>majorVersion</th>
-			<th>navigatorAppName</th>
-			<th>navigatorUserAgent</th>
-			<th>operatingSystem</th>
-			<th>language</th>
-			<th>ip</th>
-			<th>fullUrl</th>
-			<th>screenWidth</th>
-			<th>screenHeight</th>
-			<th>browserWidth</th>
-			<th>browserHeight</th>
-			<th>countryCode</th>
-			<th>countryName</th>
-			<th>latitude</th>
-			<th>longitude</th>
+			<th>Start Date</th>
+			<th>Browser</th>
+			<th>IP</th>
+			<th>Operating System</th>
+			<th>Actions</th>
 		</thead>
 		<tbody>
 			{{~it : recording}}
 			<tr>
 				<td>{{!recording.startDate}}</td>
 				<td>{{!recording.browser}}</td>
-				<td>{{!recording.version}}</td>
-				<td>{{!recording.majorVersion}}</td>
-				<td>{{!recording.navigatorAppName}}</td>
-				<td>{{!recording.navigatorUserAgent}}</td>
-				<td>{{!recording.operatingSystem}}</td>
-				<td>{{!recording.language}}</td>
 				<td>{{!recording.ip}}</td>
-				<td>{{!recording.fullUrl}}</td>
-				<td>{{!recording.screenWidth}}</td>
-				<td>{{!recording.screenHeight}}</td>
-				<td>{{!recording.browserWidth}}</td>
-				<td>{{!recording.browserHeight}}</td>
-				<td>{{!recording.countryCode}}</td>
-				<td>{{!recording.countryName}}</td>
-				<td>{{!recording.latitude}}</td>
-				<td>{{!recording.longitude}}</td>
+				<td>{{!recording.operatingSystem}}</td>
+				<td class="actions">
+					<a href="#recordings/only?id={{!recording.id}}"><i class="fa fa-eye"></i></a>
+					<i class="fa fa-bookmark-o"></i>
+				</td>
 			</tr>
 			{{~}}
 		</tbody>

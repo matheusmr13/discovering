@@ -1,0 +1,51 @@
+<h1 class="custom-font">Recording from {{!it.ip}}</h1>
+<div>
+	<div class="recording-information">
+		<div class="col-12 inline-block">
+			<div class="information">
+				<label>Browser</label>
+				<label>{{!it.browser}}</label>
+			</div>
+			<div class="information">
+				<label>Version</label>
+				<label>{{!it.majorVersion}} - {{!it.version}}</label>
+			</div>
+			<div class="information">
+				<label>Operation System</label>
+				<label>{{!it.operationSystem}}</label>
+			</div>
+			<div class="information">
+				<label>Language</label>
+				<label>{{!it.language}}</label>
+			</div>
+			<div class="information">
+				<label>Browser</label>
+				<label>{{!it.fullUrl}}</label>
+			</div>
+		</div>
+		<div class="col-12 inline-block">
+			<div class="information">
+				<label>Screen size</label>
+				<label>{{!it.screenWidth}}x{{!it.screenHeight}}</label>
+			</div>
+			<div class="information">
+				<label>Browser size</label>
+				<label>{{!it.browseWidth}}x{{!it.browserHeight}}</label>
+			</div>
+			<div class="information">
+				<label>Country</label>
+				<label>{{!it.countryCode}} - {{!it.contryName}}</label>
+			</div>
+			<div class="information">
+				<label>Lat. x Long.</label>
+				<label>{{!it.latitude}}x{{!it.longitude}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="recording-player">
+
+	</div>
+	<div class="recording-presentation">
+		<iframe src="{{!it.fullUrl}}"></iframe>
+	</div>
+</div>

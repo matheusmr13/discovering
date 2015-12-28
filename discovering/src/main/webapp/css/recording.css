@@ -1,0 +1,29 @@
+/* INFORMATION */
+
+.recording-information {
+	margin-top: 10px;
+}
+
+.information {
+	min-height: 50px;
+}
+
+.information label {
+	display: block;
+}
+
+.information label:first-child {
+	font-weight: bold;
+}
+
+.information label:last-child {
+	margin-left: 10px;
+	font-size: 15px;
+}
+/* PLAYER */
+/* PRESENTATION */
+
+.recording-presentation iframe {
+	width: 100%;
+	height: 500px;
+}

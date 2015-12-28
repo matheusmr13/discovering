@@ -5,6 +5,8 @@
 @import '/css/font-awesome.min.css';
 @import '/css/navbar.css';
 @import '/css/bootstrap.css';
+@import '/css/table.css';
+@import '/css/recording.css';
 body {
 	font-family: sans-serif;
 }
@@ -15,7 +17,7 @@ body {
 
 .background-opacity {
 	background-color: rgba(255, 255, 255, 0.9);
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100vw;
@@ -34,10 +36,17 @@ body {
 #content {
 	max-width: 1200px;
 	background-color: rgba(255, 255, 255, 0.7);
-	height: calc(100vh - 51px);
+	min-height: calc(100vh - 51px);
 	margin: auto;
 	margin-top: 51px;
 	padding: 15px;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+	color: #000;
 }
 
 h1 {
